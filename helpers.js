@@ -10,7 +10,7 @@ exports.push.getBranch = function(payload) {
     }
 
     var refParts = payload.ref.split("/");
-    var branchIndex = ref.length - 1;
+    var branchIndex = refParts.length - 1;
     var branch = refParts[branchIndex];
 
     if(!branch || branch === "") {
