@@ -42,5 +42,5 @@ handler.on("push", function(evt) {
         console.log("Nothing to do with the given branch.");
     }
 
-    return "Done!"
+    return "Done!";
 });

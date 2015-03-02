@@ -9,15 +9,15 @@ exports.push.getBranch = function(payload) {
         throw new Error("Payload has no 'ref' attribute!");
     }
 
-    var refParts = ref.split("/");
+    var refParts = payload.ref.split("/");
     var branchIndex = ref.length - 1;
     var branch = refParts[branchIndex];
 
-    if(!branch || branch == "") {
+    if(!branch || branch === "") {
         throw new Error("No branch specified on the given payload reference!");
     }
 
     return branch;
-}
+};
 
 module.exports = exports;
