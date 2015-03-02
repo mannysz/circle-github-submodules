@@ -30,7 +30,7 @@ handler.on("error", function(err) {
 handler.on("push", function(evt) {
     var branch = null;
     if(evt && evt.payload && evt.payload.ref) {
-        branch = helpers.push.getBranch(evt.payload);
+        branch = payload.push.getBranch(evt.payload);
     } else {
         throw new Error("Received invalid payload!");
     }
