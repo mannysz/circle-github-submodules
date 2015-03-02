@@ -1,12 +1,16 @@
 var http            = require("http"),
-    createHandler   = require("github-webhook-handler"),
-    env             = require("./env.js"),
-    extensions      = require("./extensions.js"),
-    helpers         = require("./helpers.js");
+    request         = require("request"),
+    createHandler   = require("github-webhook-handler"), // module to do the dirty job
+    env             = require("./env.js"),               // environment functions
+    extensions      = require("./extensions.js"),        // extended prototypes
+    payload         = require("./ghpayload.js");         // github payload helper
 
-var secretKey       = env.get("SECRET_KEY"),
-    port            = parseInt(env.get("PORT")),
-    branches        = ["master", "staging"];
+var secretKey       = env.get("SECRET_KEY"),        // github secret key
+    circleToken     = env.get("CIRCLECI_TOKEN"),    // circle-ci integration token
+    circleEndpoint  = "https://circleci.com/api/v1",// circle-ci endpoint
+    projectName     = env.get("PROJECT_NAME"),      // project name i.e: user/project 
+    branches        = ["master", "staging"];        // available branches for deploy
+    port            = parseInt(env.get("PORT")),    // port retrieved from Heroku env
 
 var handler = createHandler({ path: "/deploy", "secret": secretKey});
 
@@ -18,9 +22,7 @@ http.createServer(function(req, res){
 }).listen(port);
 
 
-
 // Webhook Handlers
-
 handler.on("error", function(err) {
     console.error("Error: " + err);
 });
@@ -37,10 +39,11 @@ handler.on("push", function(evt) {
 
     if(branches.contains(branch)) {
         console.log("Triggering '"+branch+"' build...");
+        request.post(circleEndpoint + "/project/contentools/platform-build/tree/" + branch + "?circle-token=" + circleToken);
 
     } else {
         console.log("Nothing to do with the given branch.");
     }
 
-    return "Done!";
+    return "Done.";
 });
