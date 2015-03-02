@@ -9,8 +9,8 @@ var secretKey       = env.get("SECRET_KEY"),        // github secret key
     circleToken     = env.get("CIRCLECI_TOKEN"),    // circle-ci integration token
     circleEndpoint  = "https://circleci.com/api/v1",// circle-ci endpoint
     projectName     = env.get("PROJECT_NAME"),      // project name i.e: user/project 
-    branches        = ["master", "staging"];        // available branches for deploy
-    port            = parseInt(env.get("PORT")),    // port retrieved from Heroku env
+    branches        = ["master", "staging"],        // available branches for deploy
+    port            = parseInt(env.get("PORT"));    // port retrieved from Heroku env
 
 var handler = createHandler({ path: "/deploy", "secret": secretKey});
 
