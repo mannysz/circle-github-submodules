@@ -1,12 +1,12 @@
 {
-  "name": "contentools-deploy",
+  "name": "circle-github-submodules",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Emanuel de Souza",
   "license": "ISC",
   "dependencies": {
     "github-webhook-handler": "^0.3.4",
