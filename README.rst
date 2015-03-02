@@ -1,7 +1,7 @@
-Contentools Deployment Tools
+Circle-CI Github Submodules
 =================================
 
-This repository holds the module that integrates GitHub Webhooks Handler with Heroku deployment on Circle-CI infrastructure.
+This repository holds the module that integrates GitHub Webhooks Handler with Circle-CI API build triggering. Once a submodule that is hooked to this endpoint is updated on GitHub, it will triiger a build on the given branch it was updated.
 
 The problem solved
 ---------------------------------
@@ -11,13 +11,32 @@ It was build due to the lack of support from Heroku on private submodules branch
     git submodule sync
     git submodule update --init --remote
 
-Unfortunately, heroku do not updates all its submodules using the '--remote' flag, so we decided to integrate our toolchain with circle-ci to run tests and deployment tasks everytime a submodule is updated on GitHub (using the GitHub webhooks).
+Unfortunately, heroku do not updates all its submodules using the '--remote' flag, so we decided to integrate the toolchain with circle-ci to run tests and deployment tasks everytime a submodule is updated on GitHub (using the GitHub webhooks).
 
-Circle-ci runs all the tests and deploys our code to the staging and production servers that lies on Heroku infrastructure.
+Observe the following repo structure:
+
+A -
+  | - B
+  | - C
+
+Where,
+
+A
+    Build repository. It contains two or more submodules that will be build by an automated task on circle-ci.
+
+B
+    A given dependency for the project. When it is updated on github, and it is properly configured with github webhooks, it will trigger our deployment script to trigger the circle-ci API build endpoint.
+
+C
+    Same as *B*. Just for multiple submodules representation.
+
+Given this project structure, your *circle.yml*  should be stored on the repository '*A*' and the other two repositories should have a webhook pointing to this software running on any infrastructure opened for the web.
+
+Circle-ci runs all the tests and deploys the code to the servers equivalent to the given branch (github webhooks do not support specific branch hooks, so you need to change on this project the branches you need to deploy) servers that lies on your server infrastructure.
 
 Additional purpose
 ---------------------------------
-It can be used to deploy to any other infrastructure using rsync, fabric, ansible, capistrano or any other automated deployment tool if its done on your circle.yml file on the project. You just need to adjust it on your circle-ci build configuration.
+It can be used to deploy to any other infrastructure using rsync, fabric, ansible, capistrano or any other automated deployment tool if its done on your circle.yml file on the project. You just need to adjust it on your circle-ci build configuration and the branches on the 'app.js' file on this project root.
 
 Configuring The Deployment Tool
 ---------------------------------
