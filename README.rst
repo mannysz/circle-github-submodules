@@ -7,7 +7,7 @@ The problem solved
 ---------------------------------
 It was build due to the lack of support from Heroku on private submodules branch remote upstream. After git 1.8.2 its possible to create submodules that automatically follows a branch without needing to commit the subcommits on the main git repository. You can update all submodules by using the following command-line:
 
-.. code-block:: shell
+.. code:: bash
     git submodule sync
     git submodule update --init --remote
 
